@@ -6,12 +6,13 @@ String ang="";
 String distance="";
 String data="";
 
-int angle, dist;
+float x,y;
+int angle, dist ;
 boolean serialInError;
 ControlP5 cp5;
 void setup() {
   
-   size (1366, 768); 
+   size (1280, 720); 
    try{
      myPort = new Serial(this,"COM3", 9600);                     // starts the serial communication
      myPort.bufferUntil('.');    // reads the data from the serial port up to the character '.' before calling serialEvent
@@ -167,18 +168,29 @@ void drawText()
     textSize(40);
     //text("Angle :"+angle,width*0.45,height*0.99);
     
-    //if(dist<=40) {
-    //  text("Distance :"+dist,width*0.7,height*0.99);
-    //}
+    
+    //uncomment the next line
+    //text("Angle of launcher :"+int(180-y),width*0.1,height*0.99);
+
+    if(dist<=40) {
+      text("Distance :"+dist,width*0.7,height*0.99);
+      x=pow(dist,2)+pow(30,2)-2*dist*30*cos(angle);
+      x=sqrt(x);
+      y=pow(x,2)+900-pow(dist,2);
+      y=y/(2*x*30);
+      y=degrees(acos(y));
+      text("Angle of launcher :"+int(180-y),width*0.1,height*0.99);
+
+    }
       
    translate(width/2,height-height*0.06);
    textSize(25);
    
-   text(" 30°",(width/2)*cos(radians(30)),(-width/2)*sin(radians(30)));
-   text(" 60°",(width/2)*cos(radians(60)),(-width/2)*sin(radians(60)));
+   text(" 150°",(width/2)*cos(radians(30)),(-width/2)*sin(radians(30)));
+   text(" 120°",(width/2)*cos(radians(60)),(-width/2)*sin(radians(60)));
    text("90°",(width/2)*cos(radians(91)),(-width/2)*sin(radians(90)));
-   text("120°",(width/2)*cos(radians(123)),(-width/2)*sin(radians(118)));
-   text("150°",(width/2)*cos(radians(160)),(-width/2)*sin(radians(150)));
+   text("60°",(width/2)*cos(radians(123)),(-width/2)*sin(radians(118)));
+   text("30°",(width/2)*cos(radians(160)),(-width/2)*sin(radians(150)));
     
     popMatrix();  
   
